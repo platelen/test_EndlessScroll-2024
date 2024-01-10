@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scroll.Test
+namespace Scroll
 {
-    public class TestScroll : MonoBehaviour
+    public class InfinityScroll : MonoBehaviour
     {
         [SerializeField] private ScrollRect _scrollRect;
         [SerializeField] private RectTransform _viewPortTransform;
         [SerializeField] private RectTransform _contentPanelTransform;
-        [SerializeField] private HorizontalLayoutGroup _horizontalLayoutGroup;
+        [SerializeField] private VerticalLayoutGroup _verticalLayoutGroup;
         [SerializeField] private RectTransform[] _itemList;
 
         private Vector2 _oldVelocity;
@@ -29,15 +29,15 @@ namespace Scroll.Test
             _oldVelocity = Vector2.zero;
             _isUpdate = false;
 
-            int ItemsToAdd = Mathf.CeilToInt(_viewPortTransform.rect.width /
-                                             (_itemList[0].rect.width + _horizontalLayoutGroup.spacing));
-            for (int i = 0; i < ItemsToAdd; i++)
+            int itemsToAdd = Mathf.CeilToInt(_viewPortTransform.rect.height /
+                                             (_itemList[0].rect.height + _verticalLayoutGroup.spacing));
+            for (int i = 0; i < itemsToAdd; i++)
             {
-                RectTransform RT = Instantiate(_itemList[i % _itemList.Length], _contentPanelTransform);
-                RT.SetAsLastSibling();
+                RectTransform rt = Instantiate(_itemList[i % _itemList.Length], _contentPanelTransform);
+                rt.SetAsLastSibling();
             }
 
-            for (int i = 0; i < ItemsToAdd; i++)
+            for (int i = 0; i < itemsToAdd; i++)
             {
                 int num = _itemList.Length - i - 1;
                 while (num < 0)
@@ -45,14 +45,13 @@ namespace Scroll.Test
                     num += _itemList.Length;
                 }
 
-                RectTransform RT = Instantiate(_itemList[num], _contentPanelTransform);
-                RT.SetAsFirstSibling();
+                RectTransform rt = Instantiate(_itemList[num], _contentPanelTransform);
+                rt.SetAsFirstSibling();
             }
 
             _contentPanelTransform.localPosition = new Vector3(
-                (0 - (_itemList[0].rect.width + _horizontalLayoutGroup.spacing))
-                * ItemsToAdd,
-                _contentPanelTransform.localPosition.y,
+                _contentPanelTransform.localPosition.x,
+                (0 - (_itemList[0].rect.height + _verticalLayoutGroup.spacing)) * itemsToAdd,
                 _contentPanelTransform.localPosition.z);
         }
 
@@ -64,22 +63,22 @@ namespace Scroll.Test
                 _scrollRect.velocity = _oldVelocity;
             }
 
-            if (_contentPanelTransform.localPosition.x > 0)
+            if (_contentPanelTransform.localPosition.y > 0)
             {
                 Canvas.ForceUpdateCanvases();
                 _oldVelocity = _scrollRect.velocity;
                 _contentPanelTransform.position -= new Vector3(
-                    _itemList.Length * (_itemList[0].rect.width + _horizontalLayoutGroup.spacing), 0, 0);
+                    0, _itemList.Length * (_itemList[0].rect.height + _verticalLayoutGroup.spacing), 0);
                 _isUpdate = true;
             }
 
-            if (_contentPanelTransform.localPosition.x <
-                0 - (_itemList.Length * (_itemList[0].rect.width + _horizontalLayoutGroup.spacing)))
+            if (_contentPanelTransform.localPosition.y <
+                0 - (_itemList.Length * (_itemList[0].rect.height + _verticalLayoutGroup.spacing)))
             {
                 Canvas.ForceUpdateCanvases();
                 _oldVelocity = _scrollRect.velocity;
                 _contentPanelTransform.position += new Vector3(
-                    _itemList.Length * (_itemList[0].rect.width + _horizontalLayoutGroup.spacing), 0, 0);
+                    0, _itemList.Length * (_itemList[0].rect.height + _verticalLayoutGroup.spacing), 0);
                 _isUpdate = true;
             }
         }
