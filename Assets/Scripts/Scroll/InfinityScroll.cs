@@ -14,6 +14,7 @@ namespace Scroll
         private Vector2 _oldVelocity;
         private bool _isUpdate;
 
+
         private void Start()
         {
             SetContent();
@@ -22,6 +23,7 @@ namespace Scroll
         private void Update()
         {
             InfiniteScrolling();
+
         }
 
         private void SetContent()
