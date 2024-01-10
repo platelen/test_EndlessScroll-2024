@@ -18,12 +18,17 @@ namespace Scroll
         private void Start()
         {
             SetContent();
+
+            if (_scrollRect != null)
+            {
+                _scrollRect.horizontal = false;
+                _scrollRect.vertical = false;
+            }
         }
 
         private void Update()
         {
             InfiniteScrolling();
-
         }
 
         private void SetContent()
