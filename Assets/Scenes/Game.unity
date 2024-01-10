@@ -1137,6 +1137,8 @@ MonoBehaviour:
   _scrollContent: {fileID: 685497529}
   _startSpeed: 100
   _maxSpeed: 1000
+  _accelerationTime: 4
+  _currentSpeed: 0
 --- !u!4 &1259558600
 Transform:
   m_ObjectHideFlags: 0
