@@ -14,6 +14,10 @@ namespace Scroll
         private Vector2 _oldVelocity;
         private bool _isUpdate;
 
+        public RectTransform[] ItemList => _itemList;
+
+        public VerticalLayoutGroup VerticalLayoutGroup => _verticalLayoutGroup;
+
 
         private void Start()
         {
@@ -37,28 +41,28 @@ namespace Scroll
             _isUpdate = false;
 
             int itemsToAdd = Mathf.CeilToInt(_viewPortTransform.rect.height /
-                                             (_itemList[0].rect.height + _verticalLayoutGroup.spacing));
+                                             (ItemList[0].rect.height + VerticalLayoutGroup.spacing));
             for (int i = 0; i < itemsToAdd; i++)
             {
-                RectTransform rt = Instantiate(_itemList[i % _itemList.Length], _contentPanelTransform);
+                RectTransform rt = Instantiate(ItemList[i % ItemList.Length], _contentPanelTransform);
                 rt.SetAsLastSibling();
             }
 
             for (int i = 0; i < itemsToAdd; i++)
             {
-                int num = _itemList.Length - i - 1;
+                int num = ItemList.Length - i - 1;
                 while (num < 0)
                 {
-                    num += _itemList.Length;
+                    num += ItemList.Length;
                 }
 
-                RectTransform rt = Instantiate(_itemList[num], _contentPanelTransform);
+                RectTransform rt = Instantiate(ItemList[num], _contentPanelTransform);
                 rt.SetAsFirstSibling();
             }
 
             _contentPanelTransform.localPosition = new Vector3(
                 _contentPanelTransform.localPosition.x,
-                (0 - (_itemList[0].rect.height + _verticalLayoutGroup.spacing)) * itemsToAdd,
+                (0 - (ItemList[0].rect.height + VerticalLayoutGroup.spacing)) * itemsToAdd,
                 _contentPanelTransform.localPosition.z);
         }
 
@@ -75,17 +79,17 @@ namespace Scroll
                 Canvas.ForceUpdateCanvases();
                 _oldVelocity = _scrollRect.velocity;
                 _contentPanelTransform.position -= new Vector3(
-                    0, _itemList.Length * (_itemList[0].rect.height + _verticalLayoutGroup.spacing), 0);
+                    0, ItemList.Length * (ItemList[0].rect.height + VerticalLayoutGroup.spacing), 0);
                 _isUpdate = true;
             }
 
             if (_contentPanelTransform.localPosition.y <
-                0 - (_itemList.Length * (_itemList[0].rect.height + _verticalLayoutGroup.spacing)))
+                0 - (ItemList.Length * (ItemList[0].rect.height + VerticalLayoutGroup.spacing)))
             {
                 Canvas.ForceUpdateCanvases();
                 _oldVelocity = _scrollRect.velocity;
                 _contentPanelTransform.position += new Vector3(
-                    0, _itemList.Length * (_itemList[0].rect.height + _verticalLayoutGroup.spacing), 0);
+                    0, ItemList.Length * (ItemList[0].rect.height + VerticalLayoutGroup.spacing), 0);
                 _isUpdate = true;
             }
         }

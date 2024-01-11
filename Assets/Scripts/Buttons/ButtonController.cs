@@ -1,4 +1,5 @@
 using System.Collections;
+using Scroll;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,8 +7,10 @@ namespace Buttons
 {
     public class ButtonController : MonoBehaviour
     {
+        [SerializeField] private InfinityScroll _infinityScroll;
         [SerializeField] private Button _buttonStart;
         [SerializeField] private Button _buttonStop;
+        [SerializeField] private GameObject _panelBlockButtonStop;
         [SerializeField] private RectTransform _scrollContent;
         [SerializeField] private float _startSpeed = 100f;
         [SerializeField] private float _maxSpeed = 1000f;
@@ -19,8 +22,10 @@ namespace Buttons
         private bool _isGame;
         private bool _isStopTransform;
 
+
         private void Start()
         {
+            _panelBlockButtonStop.SetActive(false);
             _isGame = false;
             _isStopTransform = false;
         }
@@ -38,6 +43,9 @@ namespace Buttons
                 UpdateSpeed(Time.deltaTime);
                 TransformScrollContent();
             }
+
+            if (_currentSpeed <= 0)
+                CenterContentOnMiddleItem();
         }
 
         private void UpdateSpeed(float deltaTime)
@@ -94,10 +102,46 @@ namespace Buttons
 
         private IEnumerator BlockStopButton()
         {
+            _panelBlockButtonStop.SetActive(true);
             _buttonStop.enabled = false;
             yield return new WaitForSeconds(_accelerationTime);
             _buttonStop.enabled = true;
+            _panelBlockButtonStop.SetActive(false);
             StopCoroutine(BlockStopButton());
+        }
+
+        private void CenterContentOnMiddleItem()
+        {
+            float centerY = CalculateCenterYForMiddleItem();
+            Vector2 currentContentPosition = _scrollContent.anchoredPosition;
+
+            currentContentPosition.y = centerY;
+
+            _scrollContent.anchoredPosition = currentContentPosition;
+        }
+
+        private float CalculateCenterYForMiddleItem()
+        {
+            int itemCount = _infinityScroll.ItemList.Length;
+            if (itemCount == 0)
+                return 0;
+
+            int middleIndex = itemCount / 2;
+            RectTransform middleItem = _infinityScroll.ItemList[middleIndex];
+
+            float topPadding = _infinityScroll.VerticalLayoutGroup.padding.top;
+            float bottomPadding = _infinityScroll.VerticalLayoutGroup.padding.bottom;
+            float spacing = _infinityScroll.VerticalLayoutGroup.spacing;
+
+            float centerY = middleItem.anchoredPosition.y;
+            centerY += middleItem.rect.height * 0.5f + topPadding;
+
+            if (middleIndex > 0)
+            {
+                centerY += spacing * 0.5f;
+            }
+
+            return centerY;
         }
     }
 }
