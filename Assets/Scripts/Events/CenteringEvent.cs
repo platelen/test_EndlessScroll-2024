@@ -5,11 +5,11 @@ namespace Events
 {
     public class CenteringEvent:MonoBehaviour
     {
-        public static readonly UnityEvent OnStartCenteringContent = new UnityEvent();
+        public static readonly UnityEvent OnStartStopButton = new UnityEvent();
         
-        public static void SendStartCenteringContent()
+        public static void SendStartStopButton()
         {
-            OnStartCenteringContent.Invoke();
+            OnStartStopButton.Invoke();
         }
     }
 }

@@ -1114,6 +1114,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1259558600}
   - component: {fileID: 1259558599}
+  - component: {fileID: 1259558601}
+  - component: {fileID: 1259558602}
   m_Layer: 0
   m_Name: Game_Controller
   m_TagString: Untagged
@@ -1133,10 +1135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be9795c1ae7c504db834844db66e655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _infinityScroll: {fileID: 2051472536}
-  _buttonStart: {fileID: 1879547898}
-  _buttonStop: {fileID: 911428362}
-  _panelBlockButtonStop: {fileID: 1328646427}
+  _contentAlignmentCalculation: {fileID: 1259558602}
+  _buttonsController: {fileID: 1259558601}
   _scrollContent: {fileID: 685497529}
   _startSpeed: 100
   _maxSpeed: 1000
@@ -1157,6 +1157,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1259558601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259558598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac720715da94c91ab734407414d2b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollContentController: {fileID: 1259558599}
+  _buttonStart: {fileID: 1879547898}
+  _buttonStop: {fileID: 911428362}
+  _panelBlockButtonStop: {fileID: 1328646427}
+--- !u!114 &1259558602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259558598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117fdf7264074922b0ca6a78532b4e23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _infinityScroll: {fileID: 2051472536}
 --- !u!1 &1328646427
 GameObject:
   m_ObjectHideFlags: 0
