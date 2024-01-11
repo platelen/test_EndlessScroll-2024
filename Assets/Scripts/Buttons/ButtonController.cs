@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -79,6 +80,7 @@ namespace Buttons
         private void StartGame()
         {
             _isGame = true;
+            StartCoroutine(BlockStopButton());
             _isStopTransform = false;
             _time = 0;
         }
@@ -88,6 +90,14 @@ namespace Buttons
             _isGame = false;
             _isStopTransform = true;
             _time = 0;
+        }
+
+        private IEnumerator BlockStopButton()
+        {
+            _buttonStop.enabled = false;
+            yield return new WaitForSeconds(_accelerationTime);
+            _buttonStop.enabled = true;
+            StopCoroutine(BlockStopButton());
         }
     }
 }
