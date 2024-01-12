@@ -1,5 +1,6 @@
 using Buttons;
 using ContentScroll;
+using SO;
 using UnityEngine;
 
 namespace Scroll
@@ -9,16 +10,20 @@ namespace Scroll
         [SerializeField] private ContentAlignmentCalculation _contentAlignmentCalculation;
         [SerializeField] private ButtonsController _buttonsController;
         [SerializeField] private RectTransform _scrollContent;
-        [SerializeField] private float _startSpeed = 100f;
-        [SerializeField] private float _maxSpeed = 1000f;
-        [SerializeField] private float _accelerationTime = 4f;
+        [SerializeField] private SoScrollData _soScrollData;
+
+        // [SerializeField] private float _startSpeed = 100f;
+        // [SerializeField] private float _maxSpeed = 1000f;
+        // [SerializeField] private float _accelerationTime = 4f;
         [SerializeField] private float _currentSpeed; //Вывел для проверки текущей скорости.
 
         private float _time;
         private bool _isGame;
         private bool _isStopTransform;
 
-        public float AccelerationTime => _accelerationTime;
+        //public float AccelerationTime => _accelerationTime;
+
+        public SoScrollData ScrollData => _soScrollData;
 
 
         private void Start()
@@ -47,14 +52,15 @@ namespace Scroll
 
         private void UpdateSpeed(float deltaTime)
         {
-            if (_currentSpeed < _maxSpeed && _isGame)
+            if (_currentSpeed < _soScrollData.MaxSpeed && _isGame)
             {
-                _currentSpeed = Mathf.Lerp(_startSpeed, _maxSpeed, _time / AccelerationTime);
+                _currentSpeed = Mathf.Lerp(_soScrollData.StartSpeed, _soScrollData.MaxSpeed,
+                    _time / _soScrollData.AccelerationTime);
                 _time += deltaTime;
             }
             else if (_currentSpeed > 0 && !_isGame)
             {
-                _currentSpeed = Mathf.Lerp(_maxSpeed, 0, _time / AccelerationTime);
+                _currentSpeed = Mathf.Lerp(_soScrollData.MaxSpeed, 0, _time / _soScrollData.AccelerationTime);
                 _time += deltaTime;
                 if (_currentSpeed <= 0)
                 {

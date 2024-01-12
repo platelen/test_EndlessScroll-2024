@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
-using Events;
+﻿using System.Collections;
 using Scroll;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Buttons
 {
-    public class ButtonsController:MonoBehaviour
+    public class ButtonsController : MonoBehaviour
     {
         [SerializeField] private ScrollContentController _scrollContentController;
         [SerializeField] private Button _buttonStart;
@@ -31,12 +29,12 @@ namespace Buttons
             _buttonStart.onClick.RemoveListener(_scrollContentController.StartGame);
             _buttonStop.onClick.RemoveListener(_scrollContentController.StopGame);
         }
-        
+
         public IEnumerator BlockStopButton()
         {
             _panelBlockButtonStop.SetActive(true);
             _buttonStop.enabled = false;
-            yield return new WaitForSeconds(_scrollContentController.AccelerationTime);
+            yield return new WaitForSeconds(_scrollContentController.ScrollData.AccelerationTime);
             _buttonStop.enabled = true;
             _panelBlockButtonStop.SetActive(false);
             StopCoroutine(BlockStopButton());
