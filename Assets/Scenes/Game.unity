@@ -6168,9 +6168,7 @@ MonoBehaviour:
   _contentAlignmentCalculation: {fileID: 1259558602}
   _buttonsController: {fileID: 1259558601}
   _scrollContent: {fileID: 685497529}
-  _startSpeed: 100
-  _maxSpeed: 1000
-  _accelerationTime: 4
+  _soScrollData: {fileID: 11400000, guid: c30251655309d1345bedb7641c7d2531, type: 2}
   _currentSpeed: 0
 --- !u!4 &1259558600
 Transform:
@@ -12453,6 +12451,6 @@ SceneRoots:
   - {fileID: 1643835902}
   - {fileID: 1637691617}
   - {fileID: 920719819}
-  - {fileID: 1259558600}
   - {fileID: 2144855954}
   - {fileID: 456608071}
+  - {fileID: 1259558600}
